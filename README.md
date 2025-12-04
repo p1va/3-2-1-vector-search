@@ -6,9 +6,9 @@ Vector search through issues of the [3-2-1](https://jamesclear.com/3-2-1) newsle
 
 </div>
 
----
+## Intro
 
-3-2-1 by James Clear is by far my favorite newsletter. It is sent out every Thursday and it features:
+**3-2-1 by James Clear** is by far my favorite newsletter. It is sent out every Thursday and it features:
 - **3 ideas** from James
 - **2 quotes** from others
 - **1 question** for the reader
