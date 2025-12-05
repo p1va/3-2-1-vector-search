@@ -13,7 +13,7 @@ Vector search through issues of the [3-2-1](https://jamesclear.com/3-2-1) newsle
 - **2 quotes** from others
 - **1 question** for the reader
 
-As it has been going on for years we index its winsdom into a Vector Store for semantic search.
+As it has been going on for years we index its winsdom into a Vector Store for semantic search and RAG.
 
 ## Installation
 
@@ -28,6 +28,10 @@ source .venv/bin/activate
 ```
 
 ## Data Pipeline
+
+<details>
+<summary><b>How to ingest data</b></summary>
+
 
 The `dagster` command is used to manage ingestion jobs from the command line.
 
@@ -60,19 +64,27 @@ Then launch the processing job
 ```sh
 dagster job execute -m pipeline.definitions -j full_processing_pipeline
 ```
+</details>
 
-## Query
+## Vector Search
 
 Once the ingestion pipeline successfully completed it is possible to query the vector store.
 
 ### Query Structure
+<details>
+<summary><b>Query structure</b></summary>
 The query will:
 - Encode the user question to a vector using the same encoder we used for the data (`all-MiniLM-L6-v2`)
 - Query the vector store for nearest vectors using dot distance as we previously normalized embeddings during encoding
 - Rerank each of the results together with the user question with `ms-marco-MiniLM-L-6-v2` cross-encoder
 - Present the results sorted by this new score
+</details>
 
 ### CLI
+
+<details>
+<summary><b>Vector search from the CLI</b></summary>
+
 
 From the command line use the `query.py` script to target the docker instance of Qdrant which we previously loaded data into.
 
@@ -84,7 +96,13 @@ uv run query.py "The importance of priorites"
 ![query in CLI](art/query-cli.png "Query from CLI")
 
 
+</details>
+
+
 ### Web UI
+
+<details>
+<summary><b>Vector search from the browser</b></summary>
 
 From the web browser launch the Streamlit `app.py`. This will use an in memory version of Qdrant seeded directly from the Parquet file.
 
@@ -94,5 +112,26 @@ uv run streamlit run app.py
 
 ![streamlit](art/streamlit.png "Query from Streamlit")
 
+</details>
 
+## RAG
+
+<details>
+<summary><b>Chat with RAG</b></summary>
+
+By structuring the vector search behind an MCP server that offers a `search_newsletter` tool we allow the model to query for newsletter issues matching a search.
+
+Set a `OPENROUTER_API_KEY` variable and eventually a `OPENROUTER_MODEL` supporting tool calls then start the interactive Q&A with:
+
+```sh
+uv run chat.py
+```
+
+![qa](art/qa.png "Q&A")
+
+To test the MCP server by itself is possible to use MCP inspector against it:
+
+```sh
+npx -y @modelcontextprotocol/inspector uv run mcp_server.py
+```
 
