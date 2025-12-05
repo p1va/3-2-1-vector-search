@@ -1,8 +1,8 @@
 <div align="center">
 
-# 3-2-1 Vector Store
+# 3-2-1 Vector Search
 
-Vector search through issues of the [3-2-1](https://jamesclear.com/3-2-1) newsletter by James Clear
+RAG and vector search through issues of the [3-2-1](https://jamesclear.com/3-2-1) newsletter by James Clear
 
 </div>
 
